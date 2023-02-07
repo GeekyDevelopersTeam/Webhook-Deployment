@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Webhook Logs</title>
+  </head>
+  <body>
+    <h1>Webhook Logs</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in logs %}
+        <tr>
+          <td>{{ log }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

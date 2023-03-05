@@ -1,0 +1,67 @@
+import requests
+import json
+
+url_for_accepting_order = "https://api.uber.com/v1/eats/orders/715243a8-dba4-48ec-ada1-63d01da444a8/accept_pos_order"
+
+payload = json.dumps({
+  "reason": "Order has been accepted."
+})
+headers = {
+  'Authorization': 'Bearer IA.VUNmGAAAAAAAEgASAAAABwAIAAwAAAAAAAAAEgAAAAAAAAGMAAAAFAAAAAAADgAQAAQAAAAIAAwAAAAOAAAAYAAAABwAAAAEAAAAEAAAAGAwc0DNkTtzn9Z63gqV4lw8AAAALUdzcAghm_TwDzEcHzseRmt0_-2KH74BIz2suyl-ws14E_ScGqfJwoEHGUlUohRnTgYitFhvufNBSDFqDAAAAMPjXSIk12pHHYvfrCQAAABiMGQ4NTgwMy0zOGEwLTQyYjMtODA2ZS03YTRjZjhlMTk2ZWU',
+  'Content-Type': 'application/json',
+  'Cookie': 'marketing_vistor_id=097537e7-1325-45a2-9382-1d1c7a0dee11; usl_rollout_id=e0bf8f97-de90-4d9e-b727-698bc453b174'
+}
+
+response = requests.request("POST", url_for_accepting_order, headers=headers, data=payload)
+
+print(response.text)
+
+from flask import Flask, request, render_template, jsonify
+import requests
+import json
+import time
+
+app = Flask(__name__)
+
+logs = []
+
+@app.route('/', methods=['GET'])
+def show_logs():
+    return render_template('index.html', logs=logs)
+
+@app.route('/logs', methods=['GET'])
+def get_logs():
+    return jsonify(logs)
+
+@app.route('/webhook', methods=['POST'])
+def receive_webhook():
+    # Your existing code here...
+
+    # Return the updated logs
+    return "OK"
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+<html>
+  <head>
+    <title>Webhook Logs</title>
+  </head>
+  <body>
+    <h1>Webhook Logs</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in logs %}
+        <tr>
+          <td>{{ log }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
